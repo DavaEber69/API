@@ -58,10 +58,10 @@ def predict(data: DiabetesInput):
 
     probability = model.predict_proba(features)[0][1]
 
-    result = "Diabetes" if prediction == 1 else "No Diabetes"
+    result = "Диабет" if prediction == 1 else "Нет диабета"
 
     return {
-    "prediction": int(prediction),
-    "result": result,
-    "probability": float(probability)
+    "Результат": int(prediction),
+    "Диагноз": result,
+    "Вероятность": float(probability)
     }
