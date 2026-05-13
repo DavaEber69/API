@@ -12,26 +12,17 @@ from pydantic import BaseModel
 import numpy as np
 import joblib
 
-# =========================
-# Загрузка модели
-# =========================
-
+# загрузка модели
 model = joblib.load("model.pkl")
 
-# =========================
-# Создание API
-# =========================
-
+# создание FastAPI
 app = FastAPI(
     title="Diabetes Prediction API",
     description="API для предсказания диабета",
     version="1.0"
 )
 
-# =========================
-# Структура входных данных
-# =========================
-
+# структура входных данных
 class DiabetesInput(BaseModel):
     Pregnancies: float
     Glucose: float
@@ -42,20 +33,14 @@ class DiabetesInput(BaseModel):
     DiabetesPedigreeFunction: float
     Age: float
 
-# =========================
-# Главная страница
-# =========================
-
+# главная страница
 @app.get("/")
 def home():
     return {
-        "message": "Diabetes Prediction API работает"
+        "message": "API работает"
     }
 
-# =========================
-# Предсказание
-# =========================
-
+# predict
 @app.post("/predict")
 def predict(data: DiabetesInput):
 
@@ -74,10 +59,7 @@ def predict(data: DiabetesInput):
 
     probability = model.predict_proba(features)[0][1]
 
-    result = "Diabetes" if prediction == 1 else "No Diabetes"
-
     return {
         "prediction": int(prediction),
-        "result": result,
-        "probability": round(float(probability), 4)
+        "probability": float(probability)
     }
