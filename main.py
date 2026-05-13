@@ -17,8 +17,7 @@ model = joblib.load("model.pkl")
 
 # создание FastAPI
 app = FastAPI(
-    title="Diabetes Prediction API",
-    description="API для предсказания диабета",
+    title="Прогнозирование диабаета",
     version="1.0"
 )
 
@@ -59,7 +58,10 @@ def predict(data: DiabetesInput):
 
     probability = model.predict_proba(features)[0][1]
 
+    result = "Diabetes" if prediction == 1 else "No Diabetes"
+
     return {
-        "prediction": int(prediction),
-        "probability": float(probability)
+    "prediction": int(prediction),
+    "result": result,
+    "probability": float(probability)
     }
