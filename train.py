@@ -14,22 +14,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from xgboost import XGBClassifier
 
-# =========================
-# Загрузка данных
-# =========================
+
 
 df = pd.read_csv("diabetes.csv")
 
-# =========================
-# Признаки и target
-# =========================
+
+
 
 X = df.drop("Outcome", axis=1)
 y = df["Outcome"]
 
-# =========================
-# Деление выборки
-# =========================
+
 
 X_train, X_test, y_train, y_test = train_test_split(
     X,
@@ -39,9 +34,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
-# =========================
-# Обучение модели
-# =========================
+
 
 model = XGBClassifier(
     random_state=42,
@@ -50,17 +43,13 @@ model = XGBClassifier(
 
 model.fit(X_train, y_train)
 
-# =========================
-# Проверка модели
-# =========================
+
+
 
 predictions = model.predict(X_test)
 
 print(classification_report(y_test, predictions))
 
-# =========================
-# Сохранение модели
-# =========================
 
 joblib.dump(model, "model.pkl")
 
