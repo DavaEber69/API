@@ -12,16 +12,14 @@ from pydantic import BaseModel
 import numpy as np
 import joblib
 
-# загрузка модели
 model = joblib.load("model.pkl")
 
-# создание FastAPI
 app = FastAPI(
     title="Прогнозирование диабаета",
     version="1.0"
 )
 
-# структура входных данных
+
 class DiabetesInput(BaseModel):
     Pregnancies: float
     Glucose: float
@@ -32,14 +30,12 @@ class DiabetesInput(BaseModel):
     DiabetesPedigreeFunction: float
     Age: float
 
-# главная страница
 @app.get("/")
 def home():
     return {
         "message": "API работает"
     }
 
-# predict
 @app.post("/predict")
 def predict(data: DiabetesInput):
 
